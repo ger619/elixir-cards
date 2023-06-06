@@ -13,7 +13,7 @@ defmodule Cards do
 
   """
   def hello do
-    "ello world"
+    "hello world"
   end
 
   def create_deck do
@@ -23,10 +23,7 @@ defmodule Cards do
     for value <-values, suit <- suits do
         "#{value} of #{suit}"
     end
-
   end
-
-
   def shuffle(deck) do
     Enum.shuffle(deck)
   end
@@ -35,9 +32,19 @@ defmodule Cards do
     Enum.member?(deck, card)
   end
 
-def deck(deal, handsize) do
+  def deal(deck, hand_size) do     # { :ok, hand } or :error
+    Enum.split(deck, hand_size)
+  end
 
-end
+  def save(deck, filename) do
+    binary = :erlang.term_to_binary(deck)
+    File.write(filename, binary)
+  end
+
+  def load(filename) do
+    {status, binary} = File.read(filename)
+    :erlang.binary_to_term binary
+  end
 
 
 end
