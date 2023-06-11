@@ -24,6 +24,7 @@ defmodule Cards do
         "#{value} of #{suit}"
     end
   end
+
   def shuffle(deck) do
     Enum.shuffle(deck)
   end
@@ -42,8 +43,22 @@ defmodule Cards do
   end
 
   def load(filename) do
-    {status, binary} = File.read(filename)
-    :erlang.binary_to_term binary
+    case File.read(filename) do
+    {:ok, binary} -> :erlang.binary_to_term binary
+     {:error, _reason}  -> "Error reading file"
+    end
+  end
+
+  def create_hand(hand_size) do
+    # deck = Cards.create_deck
+    # deck = Cards.shuffle(deck)
+    # hand = Cards.deal(deck, hand_size)
+
+    # Pipe Operator
+    Cards.create_deck
+    |> Cards.shuffle
+    |> Cards.deal(hand_size)
+
   end
 
 
