@@ -1,6 +1,7 @@
 defmodule Cards do
   @moduledoc """
-  Documentation for `Cards`.
+   Documentation for `Cards`.
+    Provides methods for creating, shuffling, and dealing a deck of cards.
   """
 
   @doc """
@@ -8,7 +9,7 @@ defmodule Cards do
 
   ## Examples
 
-      iex> Cards.hello()
+      ## iex> Cards.hello()
       :world
 
   """
@@ -16,6 +17,10 @@ defmodule Cards do
     "hello world"
   end
 
+
+  @doc """
+   Create a deck of cards.
+  """
   def create_deck do
     values = ["Ace", "Two", "Three","Four", "King" ]
     suits= ["Spade", "Diamond", "Club", "Heart"]
@@ -25,18 +30,33 @@ defmodule Cards do
     end
   end
 
+  @doc """
+   Shuffle a deck of cards.
+  """
   def shuffle(deck) do
     Enum.shuffle(deck)
   end
 
+  @doc """
+   Check if a deck contains a card.
+    iex> deck = Cards.create_deck
+    iex> Cards.contains?(deck, "Ace of Spade")
+    true
+  """
   def contains?(deck, card) do
     Enum.member?(deck, card)
   end
 
+  @doc """
+   Deal a hand of cards.
+  """
   def deal(deck, hand_size) do     # { :ok, hand } or :error
     Enum.split(deck, hand_size)
   end
 
+  @doc """
+   Save a deck of cards to a file.
+  """
   def save(deck, filename) do
     binary = :erlang.term_to_binary(deck)
     File.write(filename, binary)
@@ -48,6 +68,19 @@ defmodule Cards do
      {:error, _reason}  -> "Error reading file"
     end
   end
+
+
+  @doc """
+   Create a hand of cards.
+
+  ## Examples
+
+        iex> deck = Cards.create_deck
+        iex> {hand, deck} = Cards.deal(deck, 1)
+        iex> hand
+        ["Ace of Spade"]
+
+  """
 
   def create_hand(hand_size) do
     # deck = Cards.create_deck
